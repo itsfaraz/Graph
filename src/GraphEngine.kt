@@ -1,6 +1,6 @@
 import representation.Graph
 import representation.map.IGraph
-import representation.matrix.AdjacencyMatrixGraph
+//import representation.matrix.AdjacencyMatrixGraph
 
 class GraphEngine {
     fun main() {
@@ -18,18 +18,20 @@ class GraphEngine {
 
             this.add(70,10,8)
             this.add(70,90,2)
+            this.add(70,20,3)
 
             this.add(90,20,1)
             this.add(90,70,2)
 
 
             this.add(50,10,9)
+            this.add(50,70,12)
         }
         dictionaryGraph.display()
         println("-----------------|DELETE|--------------------")
         // Delete
         dictionaryGraph.apply {
-            this.delete(100,200)
+//            this.delete(100,200)
             this.delete(70,90)
         }
         dictionaryGraph.display()
@@ -42,9 +44,19 @@ class GraphEngine {
 
         println("-----------------|GET|--------------------")
         dictionaryGraph.apply {
-            get(10,20)
-            get(90,70)
+//            get(10,20)
+//            get(90,70)
         }
 
+        println("-----------------|EDGES|--------------------")
+        val edgeCount = dictionaryGraph.noOfEdges()
+        println("Total edges ${edgeCount}")
+
+        println("-----------------|HAS-PATH|--------------------")
+        println("Has path between vertex 50 - 90 : ${dictionaryGraph.hasPath(50,90)}")
+        println("Has path between vertex 100 - 90 : ${dictionaryGraph.hasPath(100,90)}")
+
+        println("-----------------|PRINT-ALL-PATH|--------------------")
+        dictionaryGraph.printAllPaths(50,90)
     }
 }

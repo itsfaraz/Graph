@@ -3,6 +3,7 @@ package representation.map;
 import representation.Graph;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class IGraph implements Graph {
     private HashMap<Integer,HashMap<Integer,Integer>> map;
@@ -71,6 +72,61 @@ public class IGraph implements Graph {
     public void display() {
         for(Integer key : map.keySet()){
             System.out.println(key+" --> "+map.get(key));
+        }
+    }
+
+    @Override
+    public int noOfEdges() {
+        int result = 0;
+        for (int key : map.keySet()){
+            result += map.get(key).size();
+        }
+        if (result > 0)
+            return result/2;
+        return 0;
+    }
+
+    @Override
+    public boolean hasPath(int source,int dest) {
+        HashSet<Integer> pathMap = new HashSet<>();
+        return hasPath(source,dest,pathMap);
+    }
+
+    private boolean hasPath(int source, int dest,HashSet<Integer> pathMap) {
+        if (source == dest)
+            return true;
+        if (map.containsKey(source)){
+            pathMap.add(source);
+            for (int key : map.get(source).keySet()){
+                if (pathMap.contains(key))
+                    continue;
+                boolean result = hasPath(key, dest, pathMap);
+                if (result)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void printAllPaths(int source, int dest) {
+        printAllPaths(source, dest, new HashSet<Integer>(),"");
+    }
+
+    private void printAllPaths(int source,int dest,HashSet<Integer> pathMap,String result){
+        if (source == dest) {
+            System.out.println(result.substring(0,result.length())+dest+" .");
+            return;
+        }
+        if (map.containsKey(source)){
+            result += source+" --> ";
+            pathMap.add(source);
+            for (int key : map.get(source).keySet()){
+                if (pathMap.contains(key))
+                    continue;
+                printAllPaths(key, dest, pathMap, result);
+            }
+            pathMap.remove(source);
         }
     }
 }
