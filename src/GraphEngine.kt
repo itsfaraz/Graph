@@ -86,5 +86,8 @@ class GraphEngine {
             println("-----------------|DFT|--------------------")
             dictionaryGraph.dft()
         }
+
+        println("-----------------|Get Connected Component|--------------------")
+        println(dictionaryGraph.connectedComponent)
     }
 }

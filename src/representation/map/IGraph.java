@@ -2,9 +2,7 @@ package representation.map;
 
 import representation.Graph;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class IGraph implements Graph {
     private HashMap<Integer,HashMap<Integer,Integer>> map;
@@ -133,5 +131,77 @@ public class IGraph implements Graph {
 
     public  HashMap<Integer,HashMap<Integer,Integer>> getMap(){
         return map;
+    }
+
+    public boolean isCyclic(){
+        // Using dfs
+        Stack<Integer> stack = new Stack<>();
+        HashSet<Integer> set = new HashSet<>();
+         for (int key : map.keySet()){
+             if (set.contains(key))
+                 return true;
+             stack.add(key);
+             while (!stack.isEmpty()){
+                 int child = stack.pop();
+                 if (set.contains(child))
+                     return true;
+                 set.add(child);
+                 stack.addAll(map.get(child).keySet());
+             }
+         }
+         return false;
+    }
+
+    public boolean isConnected(){
+        // Using bfs
+        Queue<Integer> queue = new LinkedList<>();
+        HashSet<Integer> set = new HashSet<>();
+        for (int key : map.keySet()){
+            if (set.contains(key))
+                return false;
+            queue.add(key);
+            while (!queue.isEmpty()){
+                int child = queue.poll();
+                if (set.contains(child))
+                    continue;
+                set.add(child);
+                queue.addAll(map.get(child).keySet());
+            }
+        }
+        return true;
+    }
+
+    public boolean isTree(){
+        // Every tree is a graph but every graph is not a tree
+        // A graph is a tree only when below 2 condition matches
+        /*
+            * A graph should be connected
+            * A graph should be acyclic
+         */
+        return isConnected() && !isCyclic();
+    }
+
+    public List<List<Integer>> getConnectedComponent(){
+        Queue<Integer> queue = new LinkedList<>();
+        HashSet<Integer> set = new HashSet<>();
+        List<List<Integer>> result = new ArrayList<>();
+        for (int key : map.keySet()){
+            List<Integer> list = new ArrayList<>();
+            if (set.contains(key)){
+                continue;
+            }
+            queue.add(key);
+            while (!queue.isEmpty()){
+                int child = queue.poll();
+                if (set.contains(child)){
+                    continue;
+                }
+                set.add(child);
+                list.add(child);
+                queue.addAll(map.get(child).keySet());
+            }
+            result.add(list);
+        }
+        return result;
     }
 }
