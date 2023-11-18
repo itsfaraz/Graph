@@ -4,6 +4,7 @@ import representation.Graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class IGraph implements Graph {
     private HashMap<Integer,HashMap<Integer,Integer>> map;
@@ -128,5 +129,9 @@ public class IGraph implements Graph {
             }
             pathMap.remove(source);
         }
+    }
+
+    public  HashMap<Integer,HashMap<Integer,Integer>> getMap(){
+        return map;
     }
 }

@@ -1,3 +1,7 @@
+import exercise.BFS
+import exercise.BFT
+import exercise.DFS
+import exercise.DFT
 import representation.Graph
 import representation.map.IGraph
 //import representation.matrix.AdjacencyMatrixGraph
@@ -6,7 +10,7 @@ class GraphEngine {
     fun main() {
 //        val  graph : Graph = AdjacencyMatrixGraph(12);
 //        graph.display();
-        val dictionaryGraph : Graph = IGraph();
+        val dictionaryGraph : DFT = DFT();
         println("-----------------|ADD|--------------------")
         dictionaryGraph.apply {
             this.add(10,20,5)
@@ -58,5 +62,29 @@ class GraphEngine {
 
         println("-----------------|PRINT-ALL-PATH|--------------------")
         dictionaryGraph.printAllPaths(50,90)
+
+
+        if (dictionaryGraph is BFS){
+            println("-----------------|BFS|--------------------")
+            val bfsResult = dictionaryGraph.bfs(10,20)
+            println("source = 10, destination = 20 :: bfs result = ${bfsResult}")
+        }
+
+        if (dictionaryGraph is DFS){
+            println("-----------------|DFS|--------------------")
+            val dfsResult = dictionaryGraph.dfs(10,20)
+            println("source = 10, destination = 20 :: dfs result = ${dfsResult}")
+        }
+
+        if (dictionaryGraph is BFT){
+            println("-----------------|BFT|--------------------")
+            dictionaryGraph.bft()
+        }
+
+
+        if (dictionaryGraph is DFT){
+            println("-----------------|DFT|--------------------")
+            dictionaryGraph.dft()
+        }
     }
 }
