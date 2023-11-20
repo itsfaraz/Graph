@@ -1,5 +1,6 @@
 import exercise.BFS
 import exercise.BFT
+import exercise.Bipartite
 import exercise.DFS
 import exercise.DFT
 import representation.Graph
@@ -89,5 +90,32 @@ class GraphEngine {
 
         println("-----------------|Get Connected Component|--------------------")
         println(dictionaryGraph.connectedComponent)
+
+        println("---------------------------------------------------------|New Graph|-------------------------------------------------------------")
+
+        val bipartiteGraph : Bipartite = Bipartite();
+        bipartiteGraph.apply {
+            this.add(1,5,5)
+            this.add(1,2,9)
+
+
+            this.add(2,1,1)
+            this.add(2,3,5)
+
+            this.add(3,2,8)
+            this.add(3,4,2)
+
+
+            this.add(4,3,2)
+            this.add(4,5,1)
+
+            this.add(5,1,5)
+            this.add(5,4,1)
+        }
+        bipartiteGraph.display()
+        if (bipartiteGraph is Bipartite){
+            println("-----------------|Is Graph Bipartite|--------------------")
+            println(bipartiteGraph.isBipartite)
+        }
     }
 }
